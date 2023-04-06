@@ -49,12 +49,7 @@ function displayTableInArray(array) {
 document.body.addEventListener('click', (event) => {
     if (!event.target.classList.contains('cell')&&event.target.id!=="button"&&event.target.id!=="input") {
         ROOT.querySelectorAll('table').forEach(value => {
-            if(value.classList.contains('active')){
                 value.classList.toggle('black');
-            } else {
-                value.classList.toggle('black');
-            }
-
         });
         return;
        } else if(event.target.id==="button"||event.target.id==="input"){
