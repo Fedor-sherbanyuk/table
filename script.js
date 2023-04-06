@@ -2,7 +2,6 @@ let FILL_ARRAY = [];
 const ROOT = document.querySelector("#root");
 const INPUT = document.createElement("input");
 const BUTTON = document.createElement("button");
-const CONTAINER = document.createElement("div");
 const TABLE_COLLECTION = document.createDocumentFragment();
 function createDisplayInput() {
     INPUT.setAttribute("type", "number");
@@ -22,7 +21,6 @@ function createDiv() {
     if(FILL_ARRAY.length>1){
         FILL_ARRAY.splice(1,FILL_ARRAY.length-1);
         document.body.querySelectorAll("table").forEach(value => value.remove());
-        CONTAINER.style.cssText = "margin:0 0 0 0;";
     }
     const valueInput = +INPUT.value;
     for (let i = 0; i < valueInput; i++) {
