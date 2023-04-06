@@ -3,17 +3,19 @@ const ROOT = document.querySelector("#root");
 const INPUT = document.createElement("input");
 const BUTTON = document.createElement("button");
 const CONTAINER = document.createElement("div");
+const TABLE_COLLECTION = document.createDocumentFragment();
 function createDisplayInput() {
     INPUT.setAttribute("type", "number");
     INPUT.setAttribute("placeholder", "Введите число");
     INPUT.setAttribute("id", "input");
-    INPUT.style.cssText = "margin: 10px 0 0 10px; padding: 5px 10px; border-radius: 5px; width: 300px;  transition: all 0.3s ease;";
+    INPUT.style.cssText = "margin: 10px 0 0 10px; padding: 20px 20px 60px 20px; border-radius: 5px; width: 500px;  transition: all 0.3s ease;";
     ROOT.append(INPUT);
     BUTTON.setAttribute("id", "button");
     BUTTON.innerText = "Создать таблицу 15 будет например 15*15";
-    BUTTON.style.cssText = "margin: 10px 0 0 10px; padding: 5px 10px; border-radius: 5px; color: white; width: 300px; height: 30px;  transition: all 0.3s ease;";
+    BUTTON.style.cssText = "margin: 10px 0 20px 10px; padding: 20px 20px 60px 20px; border-radius: 5px; color: white; width: 500px; height: 30px;  transition: all 0.3s ease;";
     ROOT.append(BUTTON);
 }
+
 createDisplayInput();
 BUTTON.addEventListener("click", createDiv);
 function createDiv() {
@@ -31,38 +33,33 @@ function createDiv() {
         for (let j = 0; j < FILL_ARRAY[i].length; j++) {
             FILL_ARRAY[i][j] = document.createElement('table');
             FILL_ARRAY[i][j].classList.add("cell");
+            TABLE_COLLECTION.append(FILL_ARRAY[i][j]);
         }
     }
     INPUT.value = "";
-    displayTableInArray(FILL_ARRAY);
+    displayTableInArray(TABLE_COLLECTION);
 }
 
 function displayTableInArray(array) {
 
-    CONTAINER.style.cssText = `display: flex; margin:200px 0 0 0; flex-direction: row; justify-content: space-around; align-items: center; align-content: center;` +
+    ROOT.style.cssText = `display: flex; margin:200px 0 0 0; flex-direction: row; justify-content: space-around; align-items: center; align-content: center;` +
         `width: ${FILL_ARRAY.length * 15.67*2}px; height: ${FILL_ARRAY.length * 15.67}px;`;
-    CONTAINER.style.flexWrap = "wrap";
-    ROOT.append(CONTAINER);// получаем элемент-контейнер, куда будем добавлять div-элементы
-    for (let i = 0; i < array.length; i++) {
-        for (let j = 0; j < array[i].length; j++) {
-            CONTAINER.appendChild(array[i][j]);
-        }
-    }
+    ROOT.style.flexWrap = "wrap";
+    ROOT.append(array);// получаем элемент-контейнер, куда будем добавлять div-элементы
 }
 
 document.body.addEventListener('click', (event) => {
     if (!event.target.classList.contains('cell')&&event.target.id!=="button"&&event.target.id!=="input") {
-        for (let i = 0; i < FILL_ARRAY.length; i++) {
-            for (let j = 0; j < FILL_ARRAY[i].length; j++) {
-                if (FILL_ARRAY[i][j].classList[1] !== 'active') {
-                    FILL_ARRAY[i][j].classList.toggle('black');
-              } else {
-                    FILL_ARRAY[i][j].classList.remove('black');
-                }
+        ROOT.querySelectorAll('table').forEach(value => {
+            if(value.classList.contains('active')){
+                value.classList.remove('black');
+            } else {
+                value.classList.toggle('black');
             }
-        }
+
+        });
         return;
-    } else if(event.target.id==="button"||event.target.id==="input"){
+       } else if(event.target.id==="button"||event.target.id==="input"){
         return;
     }
         event.target.classList.toggle('active');
